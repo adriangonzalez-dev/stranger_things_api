@@ -1,0 +1,11 @@
+{
+  "name": "stranger_things_api",
+  "version": "1.0.0",
+  "description": "Api de la serie Stranger Things",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "adriangonzalez.dev90",
+  "license": "ISC"
+}

@@ -1,4 +1,4 @@
-module.exports= (sequelize,dataTypes)  =>{
+module.exports= (sequelize,dataTypes)=>{
     let alias= "Character";
     let cols= {
         id:{
@@ -50,32 +50,32 @@ let config= {
 const Character= sequelize.define(alias,cols,config);
 
 Character.associate=(models)=>{
-    Character.hasMany(models.images,{
+    Character.belongsTo(models.Specie,{
+        as:"species",
+        foreignKey:"species_id"
+    })
+
+    Character.belongsTo(models.Genre,{
+        as:"genres",
+        foreignKey:"genre_id"
+    })
+
+    Character.belongsTo(models.Location,{
+        as:"location",
+        foreignKey:"location_id"
+    })
+
+    Character.hasMany(models.Image,{
         as:"images",
-        foreignKey:"product_id"
+        foreignKey:"character_id"
     })
 
-    Character.hasMany(models.ingredients,{
-        as:"ingredients",
-        foreignKey:"product_id"
-    })
-
-    Character.belongsToMany(models.categories,{
-        as:"categories",
-        through:"product_category",
-        foreignKey:"product_id",
-        otherKey:"category_id",
+    Character.belongsToMany(models.Episode,{
+        as:"episodes",
+        through:"episode_character",
+        foreignKey:"character_id",
+        otherKey:"episode_id",
         timestamps:false
-    })
-
-    Character.belongsToMany(models.orders,{
-        as:"orders",
-        through:"orders_product",
-        foreignKey:"product_id",
-        otherKey:"order_id",
-        createdAt:"created_at",
-        updatedAt:false,
-        deletedAt:false
     })
 }
 return Character;

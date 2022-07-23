@@ -4,7 +4,8 @@ const process = require('process');
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const db = require('../database/models');
-let cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary');
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     register: async (req, res) => {
@@ -26,7 +27,7 @@ module.exports = {
                 imagePublicId = ''
             }
 
-            db.users.create({
+            db.User.create({
                 username: req.body.username,
                 email: req.body.email,
                 pass: bcrypt.hashSync(req.body.pass, 10),
@@ -41,7 +42,8 @@ module.exports = {
                     data: {
                         id:user.id,
                         username:user.username,
-                        email:user.email
+                        email:user.email,
+                        avatar:user.avatar
                     },
                 })
             })
@@ -65,16 +67,19 @@ module.exports = {
         let errors = validationResult(req);
 
         if (errors.isEmpty()) {
-            db.users.findOne({
+            db.User.findOne({
                 where: {
                     email: req.body.email
                 }
             })
             .then((user) => {
                 const token = jwt.sign({
-                    name: user.name,
+                    name: user.username,
                     id: user.id
-                }, process.env.SECRET)
+                }, 
+                process.env.SECRET,
+                {expiresIn:"24h"}
+                )
 
                 res.header("auth-token", token).status(200).json({
                     user: {
@@ -86,6 +91,7 @@ module.exports = {
                     },
 
                     data: { token }
+                    
                 })
             })
 

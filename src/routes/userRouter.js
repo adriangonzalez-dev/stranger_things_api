@@ -5,9 +5,13 @@ const router= express.Router();
 const uploadFiles = require('../middlewares/uploadFiles')
 
 //Controllers
-const {register} = require('../controllers/userController');
+const {register,login} = require('../controllers/userController');
+
+//Validators
+const {registerValidator,loginValidator} = require('../validations/usersValidator')
 
 //routes
-router.post('/register',uploadFiles.single('avatar'),register)
+router.post('/register',registerValidator,uploadFiles.single('avatar'),register);
+router.post('/login',loginValidator,login);
 
 module.exports = router

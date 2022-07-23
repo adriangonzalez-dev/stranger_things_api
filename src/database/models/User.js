@@ -27,6 +27,9 @@ module.exports= (sequelize,dataTypes)=>{
         public_id:{
             type:dataTypes.STRING(100),
         },
+        rol:{
+            type:dataTypes.BOOLEAN,
+        }
     }
 let config= {
     tableName: "users",

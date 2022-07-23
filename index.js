@@ -9,6 +9,9 @@ const methodOverride = require('method-override');
 const cors = require("cors")
 const cloudinary = require('cloudinary')
 
+//routes
+const userRouter = require('./src/routes/userRouter')
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(methodOverride('_method'));
@@ -19,6 +22,8 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET
 })
 
+//routes middlewares
+app.use('/users',userRouter)
 
 app.listen(PORT, function () {
     console.log(`Servidor abierto en puerto ${PORT}`)

@@ -1,5 +1,5 @@
 module.exports= (sequelize,dataTypes)=>{
-    let alias= "Episode";
+    let alias= "Genre";
     let cols= {
         id:{
             type:dataTypes.INTEGER,

@@ -20,9 +20,9 @@ let config= {
 
 const Location= sequelize.define(alias,cols,config);
 
-Character.associate=(models)=>{
+Location.associate=(models)=>{
 
-    Character.belongsTo(models.Location,{
+    Location.belongsTo(models.Character,{
         as:"location",
         foreignKey:"location_id"
     })
